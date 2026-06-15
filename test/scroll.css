@@ -1,0 +1,14 @@
+/* Mengecilkan ukuran scrollbar di container berkelas .scrollbar-thin */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* Warna gray-300 */
+    border-radius: 20px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #6366f1; /* Warna indigo-500 saat di-hover */
+}

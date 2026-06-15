@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - MY-GKJW</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Buat class utility custom sendiri */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            /* gray-300 */
+            border-radius: 9999px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #94a3b8;
+            /* gray-400 */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans antialiased overflow-hidden custom-scrollbar">
+
+    <div class="flex h-screen overflow-hidden">
+
+        <aside
+            class="w-64 bg-indigo-600 text-white flex flex-col flex-shrink-0 hidden md:flex border-r border-indigo-700">
+            <div class="h-16 flex items-center px-5 border-b border-indigo-700 gap-3 flex-shrink-0">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center p-1 bg-white shadow-xs">
+                    <img src="assets/Frame 4.png" alt="MY-GKJW" class="w-full h-full object-contain">
+                </div>
+                <span class="font-bold text-base tracking-wide text-white">MY-ADMIN</span>
+            </div>
+
+            <nav
+                class="flex-1 p-3 space-y-1 overflow-y-auto [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-indigo-400/40 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-indigo-300/60">
+
+                <a href="#"
+                    class="flex items-center gap-3 px-3.5 py-2.5 bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-xs transition-all duration-200">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z">
+                        </path>
+                    </svg>
+                    Dashboard
+                </a>
+
+                <a href="#"
+                    class="flex items-center gap-3 px-3.5 py-2.5 text-indigo-100 hover:bg-indigo-700/50 hover:text-white rounded-xl text-sm font-medium transition-all duration-200">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zm7-3a3 3 0 010 6M21 21v-2a4 4 0 00-3-3.87">
+                        </path>
+                    </svg>
+                    Manajemen Jemaat
+                </a>
+
+                <a href="#"
+                    class="flex items-center gap-3 px-3.5 py-2.5 text-indigo-100 hover:bg-indigo-700/50 hover:text-white rounded-xl text-sm font-medium transition-all duration-200">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    Manajemen Kegiatan
+                </a>
+
+                <a href="#"
+                    class="flex items-center gap-3 px-3.5 py-2.5 text-indigo-100 hover:bg-indigo-700/50 hover:text-white rounded-xl text-sm font-medium transition-all duration-200">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                    Manajemen Persembahan
+                </a>
+
+                <a href="#"
+                    class="flex items-center gap-3 px-3.5 py-2.5 text-indigo-100 hover:bg-indigo-700/50 hover:text-white rounded-xl text-sm font-medium transition-all duration-200">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5l2 2h5a2 2 0 012 2v12a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    Data Laporan
+                </a>
+            </nav>
+
+            <div class="p-3 border-t border-indigo-700 flex-shrink-0">
+                <a href="index.html"
+                    class="flex items-center gap-3 px-3.5 py-2.5 text-white hover:bg-indigo-700/50 rounded-xl text-sm font-medium transition-all duration-200">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        </path>
+                    </svg>
+                    Logout
+                </a>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <header
+                class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <button class="text-gray-500 focus:outline-none md:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <h2 class="text-xl font-bold text-gray-800">Dashboard</h2>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <div class="text-right hidden md:block border-r border-gray-200 pr-6">
+                        <p id="realtime-clock" class="text-sm font-bold text-gray-800 tracking-wide">00:00:00 WIB</p>
+                        <p id="realtime-date" class="text-xs font-medium text-gray-500 mt-0.5">Kamis, 1 Januari 1970</p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-sm font-semibold text-gray-800">Admin Utama</p>
+                            <p class="text-xs text-gray-400">Ezra Gilang Raharjo</p>
+                        </div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold shadow-inner">
+                            EG
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 flex flex-col p-4 bg-slate-50 gap-4 overflow-hidden">
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-shrink-0">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Jemaat</p>
+                        <p class="text-xl font-bold text-indigo-600 mt-0.5">1,240 Orang</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Persembahan Bulan Ini
+                        </p>
+                        <p class="text-xl font-bold text-indigo-600 mt-0.5">Rp 24.500.000</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Kegiatan Bulan Ini</p>
+                        <p class="text-xl font-bold text-indigo-600 mt-0.5">8 Agenda</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+
+                    <div
+                        class="lg:col-span-2 bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col min-h-[400px] overflow-hidden relative group">
+
+                        <div
+                            class="flex items-center justify-between mb-4 flex-shrink-0 gap-4 border-b border-gray-50 pb-3">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span id="carouselBadge"
+                                        class="text-[10px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-md">Analitik</span>
+                                    <h3 id="carouselTitle" class="text-md font-bold text-gray-800">Grafik Persembahan
+                                        Bulanan</h3>
+                                </div>
+                                <p id="carouselSub" class="text-xs text-gray-500 mt-0.5">Statistik akumulasi persembahan
+                                    tahun 2026</p>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <div class="flex gap-1.5 mr-2">
+                                    <span id="dot0"
+                                        class="w-2 h-2 rounded-full bg-indigo-600 transition-all duration-300"></span>
+                                    <span id="dot1"
+                                        class="w-2 h-2 rounded-full bg-gray-200 transition-all duration-300"></span>
+                                </div>
+
+                                <div class="flex bg-gray-100 p-0.5 rounded-lg border border-gray-200">
+                                    <button id="btnPrevSlide"
+                                        class="p-1.5 rounded-md hover:bg-white text-gray-500 hover:text-gray-800 transition shadow-xs">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <button id="btnNextSlide"
+                                        class="p-1.5 rounded-md hover:bg-white text-gray-500 hover:text-gray-800 transition shadow-xs">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative w-full flex-1 overflow-hidden min-h-0">
+                            <div id="carouselTrack"
+                                class="flex w-full h-full transition-transform duration-500 ease-in-out transform translate-x-0">
+
+                                <div class="w-full h-full flex-shrink-0 flex flex-col justify-between min-h-0 px-1">
+                                    <div class="flex items-center justify-between mb-3 flex-shrink-0">
+                                        <span
+                                            class="text-xs font-bold bg-slate-100 text-gray-600 px-2.5 py-1 rounded-md border border-gray-200">
+                                            IDR (Rupiah)
+                                        </span>
+                                        <div
+                                            class="flex bg-gray-100 p-0.5 rounded-lg border border-gray-200 text-xs font-semibold">
+                                            <button id="btnLineChart"
+                                                class="px-2.5 py-1 rounded-md bg-white text-gray-800 shadow-xs transition-all">Garis</button>
+                                            <button id="btnBarChart"
+                                                class="px-2.5 py-1 rounded-md text-gray-500 hover:text-gray-800 transition-all">Batang</button>
+                                        </div>
+                                    </div>
+                                    <div class="relative w-full flex-1 min-h-0">
+                                        <canvas id="persembahanChart" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full h-full flex-shrink-0 grid grid-cols-1 md:grid-cols-5 gap-4 min-h-0 px-1">
+                                    <div
+                                        class="md:col-span-3 flex flex-col justify-between bg-slate-50/50 border border-gray-100 p-3 rounded-xl">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-xs font-bold text-gray-700">Juni 2026</span>
+                                            <span class="text-[10px] text-gray-400 font-medium">WIB</span>
+                                        </div>
+                                        <div
+                                            class="grid grid-cols-7 text-center text-[11px] font-bold text-gray-400 mb-1">
+                                            <div class="text-red-500">Min</div>
+                                            <div>Sen</div>
+                                            <div>Sel</div>
+                                            <div>Rab</div>
+                                            <div>Kam</div>
+                                            <div>Jum</div>
+                                            <div>Sab</div>
+                                        </div>
+                                        <div
+                                            class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-gray-700 flex-1 items-center">
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">1</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">2</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">3</button>
+                                            <button
+                                                class="p-1.5 bg-indigo-600 text-white rounded-lg shadow-sm relative">4</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">5</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">6</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-red-600 relative font-bold">7<span
+                                                    class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-red-500 rounded-full"></span></button>
+
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">8</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">9</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">10</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">11</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-indigo-600 relative font-bold">12<span
+                                                    class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-indigo-500 rounded-full"></span></button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">13</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-red-600 relative font-bold">14<span
+                                                    class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-red-500 rounded-full"></span></button>
+
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">15</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">16</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">17</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg relative font-bold text-indigo-600">18<span
+                                                    class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-indigo-500 rounded-full"></span></button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">19</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">20</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-red-600 relative font-bold">21<span
+                                                    class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-red-500 rounded-full"></span></button>
+
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">22</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">23</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">24</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">25</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">26</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">27</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-red-600 relative font-bold">28<span
+                                                    class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-red-500 rounded-full"></span></button>
+
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">29</button>
+                                            <button
+                                                class="p-1.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition">30</button>
+                                            <span class="text-gray-300 p-1.5">1</span><span
+                                                class="text-gray-300 p-1.5">2</span><span
+                                                class="text-gray-300 p-1.5">3</span><span
+                                                class="text-gray-300 p-1.5">4</span><span
+                                                class="text-gray-300 p-1.5">5</span>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="md:col-span-2 flex flex-col min-h-0 overflow-y-auto space-y-2 pr-1 [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full">
+                                        <p
+                                            class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1 flex-shrink-0">
+                                            Agenda Terdekat</p>
+
+                                        <div
+                                            class="p-2.5 bg-indigo-50/50 border border-indigo-100 rounded-xl space-y-0.5">
+                                            <span
+                                                class="text-[9px] font-bold bg-indigo-600 text-white px-1.5 py-0.5 rounded-sm">07
+                                                Juni</span>
+                                            <h4 class="text-xs font-bold text-gray-800 pt-1 leading-snug">Sakramen
+                                                Perjamuan Kudus</h4>
+                                            <p class="text-[10px] text-gray-500">06:00 WIB • Induk Gereja</p>
+                                        </div>
+
+                                        <div class="p-2.5 bg-slate-50 border border-gray-100 rounded-xl space-y-0.5">
+                                            <span
+                                                class="text-[9px] font-bold bg-gray-500 text-white px-1.5 py-0.5 rounded-sm">12
+                                                Juni</span>
+                                            <h4 class="text-xs font-bold text-gray-800 pt-1 leading-snug">Latihan Paduan
+                                                Suara Remaja</h4>
+                                            <p class="text-[10px] text-gray-500">17:00 WIB • Gedung Serbaguna</p>
+                                        </div>
+
+                                        <div class="p-2.5 bg-slate-50 border border-gray-100 rounded-xl space-y-0.5">
+                                            <span
+                                                class="text-[9px] font-bold bg-gray-500 text-white px-1.5 py-0.5 rounded-sm">18
+                                                Juni</span>
+                                            <h4 class="text-xs font-bold text-gray-800 pt-1 leading-snug">Rapat PHMJ
+                                                Pleno Bulanan</h4>
+                                            <p class="text-[10px] text-gray-500">19:00 WIB • Ruang Rapat</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col gap-4 custom-scrollbar overflow-hidden min-h-0">
+
+                        <div class="flex flex-col max-h-48 min-h-0">
+                            <div class="flex items-center gap-2 mb-2 flex-shrink-0">
+                                <span class="relative flex h-2 w-2">
+                                    <span
+                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                </span>
+                                <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500">Sedang Berlangsung
+                                </h3>
+                            </div>
+
+                            <div class="space-y-2 overflow-y-auto flex-1 custom-scrollbar min-h-0 pr-1">
+                                <div class="p-3 bg-red-50/60 border border-red-100 rounded-lg space-y-1">
+                                    <h4 class="font-bold text-gray-800 text-xs">Persiapan Sidang Majelis Jemaat</h4>
+                                    <div class="flex items-center gap-4 text-[11px] text-gray-500">
+                                        <span class="flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            09:00 - Selesai
+                                        </span>
+                                        <span class="flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                                </path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                            Ruang Konsistori
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-gray-100 flex-shrink-0"></div>
+
+                        <div class="flex-1 flex flex-col min-h-0">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex-shrink-0">
+                                Kegiatan Akan Datang
+                            </h3>
+
+                            <div class="space-y-2 overflow-y-auto custom-scrollbar flex-1 pr-1">
+                                <div class="flex items-start gap-3 p-1.5 hover:bg-slate-50 rounded-lg transition">
+                                    <div
+                                        class="bg-indigo-50 text-indigo-600 font-bold p-1.5 rounded-md text-center min-w-[40px]">
+                                        <p class="text-[10px] uppercase leading-none">Jun</p>
+                                        <p class="text-sm leading-none mt-1">07</p>
+                                    </div>
+                                    <div class="space-y-0.5">
+                                        <h4 class="text-xs font-semibold text-gray-800 line-clamp-1">Ibadah Minggu &
+                                            Sakramen Perjamuan</h4>
+                                        <p class="text-[11px] text-gray-400">06:00 WIB • Induk Gereja</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-3 p-1.5 hover:bg-slate-50 rounded-lg transition">
+                                    <div
+                                        class="bg-indigo-50 text-indigo-600 font-bold p-1.5 rounded-md text-center min-w-[40px]">
+                                        <p class="text-[10px] uppercase leading-none">Jun</p>
+                                        <p class="text-sm leading-none mt-1">12</p>
+                                    </div>
+                                    <div class="space-y-0.5">
+                                        <h4 class="text-xs font-semibold text-gray-800 line-clamp-1">Kebaktian Paduan
+                                            Suara Remaja</h4>
+                                        <p class="text-[11px] text-gray-400">17:00 WIB • Gedung Serbaguna</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const track = document.getElementById("carouselTrack");
+            const prevBtn = document.getElementById("btnPrevSlide");
+            const nextBtn = document.getElementById("btnNextSlide");
+
+            const title = document.getElementById("carouselTitle");
+            const sub = document.getElementById("carouselSub");
+            const badge = document.getElementById("carouselBadge");
+
+            const dot0 = document.getElementById("dot0");
+            const dot1 = document.getElementById("dot1");
+
+            let currentSlide = 0; // 0 = Chart, 1 = Kalender
+
+            // Data Konten Teks untuk Masing-Masing Slide
+            const slideData = [
+                {
+                    badge: "Analitik",
+                    title: "Grafik Persembahan Bulanan",
+                    sub: "Statistik akumulasi persembahan tahun 2026"
+                },
+                {
+                    badge: "Kalender",
+                    title: "Agenda Kegiatan Jemaat",
+                    sub: "Penjadwalan ibadah dan kegiatan sepanjang bulan ini"
+                }
+            ];
+
+            function updateSlide(index) {
+                currentSlide = index;
+
+                // Pindahkan posisi slide track (-100% untuk menggeser ke slide ke-2)
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+                // Perbarui isi teks header
+                badge.innerText = slideData[currentSlide].badge;
+                title.innerText = slideData[currentSlide].title;
+                sub.innerText = slideData[currentSlide].sub;
+
+                // Perbarui visualisasi indikator titik (dots)
+                if (currentSlide === 0) {
+                    dot0.classList.replace("bg-gray-200", "bg-indigo-600");
+                    dot1.classList.replace("bg-indigo-600", "bg-gray-200");
+                } else {
+                    dot0.classList.replace("bg-indigo-600", "bg-gray-200");
+                    dot1.classList.replace("bg-gray-200", "bg-indigo-600");
+                }
+            }
+
+            // Event Listener Tombol Navigasi
+            nextBtn.addEventListener("click", () => {
+                let index = currentSlide === 0 ? 1 : 0; // Melompat bolak-balik (loop)
+                updateSlide(index);
+            });
+
+            prevBtn.addEventListener("click", () => {
+                let index = currentSlide === 1 ? 0 : 1;
+                updateSlide(index);
+            });
+        });
+    </script>
+
+    <script>
+        // --- 2. SCRIPT REAL-TIME CLOCK & DATE ---
+        function updateDateTime() {
+            const now = new Date();
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('realtime-clock').textContent = `${hours}:${minutes} WIB`;
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('realtime-date').textContent = now.toLocaleDateString('id-ID', options);
+        }
+
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+
+        // --- 3. SCRIPT CHART.JS ---
+        const ctx = document.getElementById('persembahanChart').getContext('2d');
+
+        // 1. Inisialisasi awal Chart (Menggunakan data asli dan konfigurasi Rupiah milikmu)
+        let myChart = new Chart(ctx, {
+            type: 'line', // Tipe default saat pertama kali dimuat
+            data: {
+                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni'],
+                datasets: [{
+                    label: 'Jumlah Persembahan',
+                    data: [15000000, 18500000, 14200000, 71000000, 24500000, 19000000],
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.05)',
+                    borderWidth: 3,
+                    tension: 0.35,
+                    fill: true,
+                    pointBackgroundColor: '#4f46e5',
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f3f4f6' },
+                        ticks: {
+                            callback: function (value) {
+                                return 'Rp ' + value.toLocaleString('id-ID');
+                            },
+                            font: { size: 10 }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // 2. Logic untuk ganti tipe Chart lewat tombol
+        const btnLine = document.getElementById('btnLineChart');
+        const btnBar = document.getElementById('btnBarChart');
+
+        function changeChartType(type) {
+            // Ambil konfigurasi (data & options) yang sedang berjalan
+            const config = myChart.config;
+
+            // Hancurkan instance chart lama agar tidak tumpang tindih saat di-render ulang
+            myChart.destroy();
+
+            // Set tipe chart baru (line / bar)
+            config.type = type;
+
+            // Trik Visual: Ubah background warna agar saat jadi 'bar' warnanya terlihat lebih solid
+            if (type === 'bar') {
+                config.data.datasets[0].backgroundColor = '#4f46e5';
+            } else {
+                config.data.datasets[0].backgroundColor = 'rgba(79, 70, 229, 0.05)';
+            }
+
+            // Buat ulang objek chart dengan konfigurasi yang telah diperbarui
+            myChart = new Chart(ctx, config);
+
+            // Manajemen gaya tombol aktif/non-aktif (Tailwind kelas)
+            if (type === 'line') {
+                btnLine.classList.add('bg-white', 'text-gray-800', 'shadow-xs');
+                btnLine.classList.remove('text-gray-500');
+
+                btnBar.classList.remove('bg-white', 'text-gray-800', 'shadow-xs');
+                btnBar.classList.add('text-gray-500');
+            } else {
+                btnBar.classList.add('bg-white', 'text-gray-800', 'shadow-xs');
+                btnBar.classList.remove('text-gray-500');
+
+                btnLine.classList.remove('bg-white', 'text-gray-800', 'shadow-xs');
+                btnLine.classList.add('text-gray-500');
+            }
+        }
+
+        // Event Listener Tombol
+        btnLine.addEventListener('click', () => changeChartType('line'));
+        btnBar.addEventListener('click', () => changeChartType('bar'));
+    </script>
+</body>
+
+</html>

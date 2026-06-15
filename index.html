@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login QR - MY-GKJW</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen antialiased p-4">
+
+    <div class="flex flex-col md:flex-row bg-white rounded-2xl shadow-md overflow-hidden max-w-5xl w-full">
+
+        <div class="w-full md:w-5/12 bg-indigo-600 p-8 md:p-12 flex flex-col justify-between text-white">
+            
+            <div>
+                <div class="flex items-center mb-8">
+                    <div class="w-24 h-24 rounded-xl flex items-center justify-center p-2">
+                        <img src="assets/Frame 4.png" alt="MY-GKJW" class="w-20 h-20 object-contain">
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-extrabold tracking-tight">MY-ADMIN</h1>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold mb-4">Selamat Datang Kembali</h2>
+                    <p class="text-indigo-100 mb-8 leading-relaxed">
+                        Akses dashboard Anda dengan cepat dan aman menggunakan pemindaian Kode QR melalui aplikasi seluler.
+                    </p>
+                    
+                    <div class="bg-indigo-700/50 p-5 rounded-xl border border-indigo-500/30">
+                        <p class="font-semibold mb-3 text-sm uppercase tracking-wider text-indigo-200">Cara Masuk</p>
+                        <ol class="list-decimal list-outside pl-4 space-y-2 text-indigo-50">
+                            <li>Buka aplikasi <span class="font-bold text-white"><a href="indexv2.html">MY-GKJW</a></span> di ponsel Anda.</li>
+                            <li>Pilih menu <span class="font-bold text-white">Pindai QR</span>.</li>
+                            <li>Arahkan kamera ke kode di sebelah kanan.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full md:w-7/12 p-8 md:p-12 flex flex-col items-center justify-center bg-white">
+            
+            <div class="text-center w-full max-w-sm">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Masuk via Kode QR</h2>
+                <p class="text-gray-500 text-sm mb-8">Pindai kode di bawah ini untuk melanjutkan</p>
+                
+                <div class="mx-auto bg-white p-4 rounded-2xl border-2 border-indigo-100 shadow-sm mb-6 flex items-center justify-center aspect-square w-64 h-64 relative">
+                    
+                    <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-indigo-600 rounded-tl-xl m-2"></div>
+                    <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-indigo-600 rounded-tr-xl m-2"></div>
+                    <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-indigo-600 rounded-bl-xl m-2"></div>
+                    <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-indigo-600 rounded-br-xl m-2"></div>
+
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ContohDataLogin" alt="Kode QR" class="w-full h-full object-contain p-2">
+                </div>
+
+                <div class="flex items-center justify-center gap-2 mb-8">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-600"></span>
+                    </span>
+                    <p class="text-sm font-medium text-gray-600">Kode kadaluarsa dalam <span class="font-bold text-indigo-600">01:59</span></p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

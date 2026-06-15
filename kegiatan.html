@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kegiatan & Jadwal - MY-GKJW</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+    <script src="components/app_sidebar.js" defer></script>
+    <script src="components/app_header.js" defer></script>
+    <script src="layouts/base_layout.js" defer></script>
+</head>
+
+<body class="m-0 p-0 overflow-hidden">
+
+    <base-layout active-page="kegiatan" page-title="Jadwal & Kegiatan"
+        page-desc="Pantau agenda kegiatan jemaat yang sedang dan akan berlangsung.">
+
+        <div class="flex justify-between items-center mb-6 shrink-0">
+            <h3 class="text-xl font-black text-gray-900 tracking-tight">Agenda & Program Kerja Terjadwal</h3>
+            <button
+                class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-md transition-all">
+                + Tambah Kegiatan Baru
+            </button>
+        </div>
+
+        <div class="flex-1 flex flex-col md:flex-row gap-6 min-h-0 w-full overflow-hidden">
+
+            <div class="w-full md:w-[380px] bg-gray-50 border border-gray-100 rounded-2xl p-5 flex flex-col shrink-0">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex flex-col">
+                        <span id="calendarMonthYear" class="text-base font-black text-gray-900 capitalize">Juni
+                            2026</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button id="prevMonthBtn" type="button"
+                            class="p-1.5 hover:bg-white border border-transparent hover:border-gray-200 rounded-lg text-gray-600 transition-colors cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>
+                        </button>
+                        <button id="nextMonthBtn" type="button"
+                            class="p-1.5 hover:bg-white border border-transparent hover:border-gray-200 rounded-lg text-gray-600 transition-colors cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-gray-400 mb-2">
+                    <div>Min</div>
+                    <div>Sen</div>
+                    <div>Sel</div>
+                    <div>Rab</div>
+                    <div>Kam</div>
+                    <div>Jum</div>
+                    <div>Sab</div>
+                </div>
+
+                <div id="calendarDaysGrid" class="grid grid-cols-7 gap-1 text-center text-sm font-medium">
+                </div>
+            </div>
+
+            <div class="flex-1 flex flex-col min-h-0">
+                <div id="selectedDateTitle" class="text-sm font-bold text-gray-500 mb-3 uppercase tracking-wider">
+                    Agenda Kegiatan Jemaat
+                </div>
+                <div id="activityContainer" class="flex-1 overflow-y-auto space-y-4 pr-2 scrollbar-thin min-h-0">
+                </div>
+            </div>
+
+        </div>
+
+    </base-layout>
+
+    <script>
+        // Hari Real Sistem saat ini
+        const TODAY_DATE = new Date(2026, 5, 6);
+
+        // State Tanggal Terpilih Aktif yang diklik user
+        let selectedDateStr = "2026-06-06";
+
+        // State Bulan Kalender yang sedang dilihat user saat ini
+        let viewDate = new Date(2026, 5, 6);
+
+        // Data Kegiatan Jemaat (Format Key Wajib Pas: YYYY-MM-DD)
+        const eventsData = {
+            "2026-06-06": [
+                { title: "Kelas Katekisasi Remaja", time: "16:00 - 18:00 WIB", loc: "Ruang Konsistori", type: "current", dayLabel: "Hari", dateLabel: "INI" },
+                { title: "Donor Darah Komisi Adi Yuswa", time: "Sabtu, 08:00 WIB", loc: "Aula IPTH", type: "upcoming", dayLabel: "Sab", dateLabel: "06" }
+            ],
+            "2026-06-07": [
+                { title: "Rapat Pleno Majelis Jemaat", time: "Minggu, 11:00 WIB", loc: "Ruang Rapat", type: "upcoming", dayLabel: "Min", dateLabel: "07" }
+            ],
+            "2026-06-15": [
+                { title: "Persiapan Perjamuan Kudus", time: "Senin, 19:00 WIB", loc: "Gedung Induk", type: "upcoming", dayLabel: "Sen", dateLabel: "15" }
+            ]
+        };
+
+        const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+
+        function renderCalendar() {
+            const year = viewDate.getFullYear();
+            const month = viewDate.getMonth();
+
+            const monthYearElem = document.getElementById("calendarMonthYear");
+            if (monthYearElem) {
+                monthYearElem.innerText = `${months[month]} ${year}`;
+            }
+
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const lastDay = new Date(year, month + 1, 0).getDate();
+            const prevLastDay = new Date(year, month, 0).getDate();
+
+            let daysHTML = "";
+
+            // 1. Sisa Tanggal Bulan Sebelumnya (Abu-abu mati)
+            for (let i = firstDayIndex; i > 0; i--) {
+                daysHTML += `<div class="p-2 text-gray-200 pointer-events-none select-none">${prevLastDay - i + 1}</div>`;
+            }
+
+            // 2. Tanggal Bulan Berjalan
+            for (let day = 1; day <= lastDay; day++) {
+                const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasEvent = eventsData[dateString] && eventsData[dateString].length > 0;
+
+                const isRealToday = day === TODAY_DATE.getDate() && month === TODAY_DATE.getMonth() && year === TODAY_DATE.getFullYear();
+                const isSelected = dateString === selectedDateStr;
+
+                let styleClass = "";
+                if (isSelected) {
+                    styleClass = "bg-indigo-600 text-white rounded-xl shadow-md cursor-pointer font-bold z-10";
+                } else if (isRealToday) {
+                    styleClass = "bg-indigo-100 text-indigo-700 rounded-xl font-bold cursor-pointer hover:bg-indigo-200";
+                } else {
+                    styleClass = "text-gray-700 hover:bg-white hover:shadow-sm rounded-xl cursor-pointer";
+                }
+
+                let dotHTML = hasEvent ? `<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 ${isSelected ? 'bg-white' : 'bg-indigo-500'} rounded-full"></span>` : "";
+
+                daysHTML += `
+                    <div class="p-2.5 relative transition-all ${styleClass}" onclick="selectDate('${dateString}')">
+                        <span>${day}</span>
+                        ${dotHTML}
+                    </div>
+                `;
+            }
+
+            const gridElem = document.getElementById("calendarDaysGrid");
+            if (gridElem) {
+                gridElem.innerHTML = daysHTML;
+            }
+        }
+
+        function renderActivities(dateStr) {
+            const container = document.getElementById("activityContainer");
+            const titleContainer = document.getElementById("selectedDateTitle");
+            if (!container || !titleContainer) return;
+
+            const parts = dateStr.split('-');
+            const parseDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+            titleContainer.innerText = `Agenda Jemaat • ${dayNames[parseDate.getDay()]}, ${parseDate.getDate()} ${months[parseDate.getMonth()]} ${parseDate.getFullYear()}`;
+
+            const activities = eventsData[dateStr] || [];
+
+            if (activities.length === 0) {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-12 px-4 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50">
+                        <svg class="w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                        </svg>
+                        <p class="text-sm font-semibold text-gray-400">Tidak ada jadwal kegiatan pada tanggal ini.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let listHTML = "";
+            activities.forEach(act => {
+                const isCurrent = act.type === 'current';
+                const badgeClass = isCurrent ? 'bg-amber-100 text-amber-700' : 'bg-indigo-100 text-indigo-700';
+                const borderClass = isCurrent ? 'border-amber-100' : 'border-indigo-50';
+                const iconBoxClass = isCurrent ? 'bg-amber-50 border-amber-200 text-amber-700' : 'bg-indigo-50 border-indigo-100 text-indigo-700';
+                const statusSymbol = isCurrent ? '● Sedang Berlangsung' : '⏰ Akan Datang';
+
+                listHTML += `
+                    <div class="bg-white border-2 ${borderClass} rounded-2xl p-5 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:shadow-md transition-all">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl ${iconBoxClass} border flex flex-col justify-center items-center shrink-0">
+                                <span class="text-[10px] font-bold uppercase leading-none mb-0.5">${act.dayLabel}</span>
+                                <span class="text-sm font-black leading-none">${act.dateLabel}</span>
+                            </div>
+                            <div>
+                                <span class="px-2.5 py-0.5 text-[10px] font-bold ${badgeClass} rounded-full uppercase tracking-wider">${statusSymbol}</span>
+                                <h4 class="text-base font-bold text-gray-900 mt-1">${act.title}</h4>
+                                <p class="text-xs text-gray-500 mt-1">📍 ${act.loc} • ⏰ ${act.time}</p>
+                            </div>
+                        </div>
+                        <button class="text-xs font-bold border border-gray-200 hover:border-indigo-500 hover:text-indigo-600 px-4 py-2 rounded-xl transition-all self-end md:self-center">
+                            Detail Kegiatan
+                        </button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = listHTML;
+        }
+
+        function selectDate(dateStr) {
+            selectedDateStr = dateStr;
+            renderCalendar();
+            renderActivities(dateStr);
+        }
+
+        // Fungsi inisialisasi utama (Dibungkus agar aman dari siklus render Base Layout)
+        function initCalendarApp() {
+            renderCalendar();
+            renderActivities(selectedDateStr);
+
+            const prevBtn = document.getElementById("prevMonthBtn");
+            const nextBtn = document.getElementById("nextMonthBtn");
+
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    viewDate.setMonth(viewDate.getMonth() - 1);
+                    renderCalendar();
+                });
+
+                nextBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    viewDate.setMonth(viewDate.getMonth() + 1);
+                    renderCalendar();
+                });
+            }
+        }
+
+        // Jalankan inisialisasi dengan delay aman 100ms agar Base Layout selesai merender komponennya
+        window.addEventListener("load", () => {
+            setTimeout(initCalendarApp, 100);
+        });
+    </script>
+</body>
+
+</html>
