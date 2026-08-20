@@ -13,4 +13,4 @@ Sistem Informasi Gereja (MyGKJW) adalah platform digital yang dirancang untuk me
 
 Anda dapat melihat demonstrasi sistem melalui tautan di bawah ini:
 
-[**Klik di sini untuk melihat Demo MyGKJW**](https://dummy-mygkjw-22xg.vercel.app/index.html)
+[**Klik di sini untuk melihat Demo MyGKJW**](https://dummy-mygkjw-22xg.vercel.app/indexv2.html)
